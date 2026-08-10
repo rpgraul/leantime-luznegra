@@ -10,8 +10,19 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libldap2-dev \
+    libssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip \
+    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        pdo \
+        pdo_mysql \
+        mysqli \
+        zip \
+        bcmath \
+        pcntl \
+        ldap \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instala o Composer

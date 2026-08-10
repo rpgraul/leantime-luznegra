@@ -37,6 +37,9 @@ WORKDIR /var/www/html
 # Copia apenas os arquivos de dependência primeiro (para melhor cache)
 COPY composer.json composer.lock* ./
 
+# Cria a pasta Shims (necessária para o autoload do Leantime)
+RUN mkdir -p app/Core/Shims
+
 # Instala as dependências do Composer (sem dev e com otimização)
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 

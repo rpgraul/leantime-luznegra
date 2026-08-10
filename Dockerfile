@@ -1,7 +1,7 @@
 # Usa a imagem oficial do PHP com Apache
 FROM php:8.2-apache
 
-# Instala dependências do sistema e extensões PHP necessárias
+# Instala dependências do sistema e extensões PHP
 RUN apt-get update && apt-get install -y \
     git \
     zip \
@@ -14,14 +14,23 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Instala o Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Habilita o mod_rewrite do Apache
 RUN a2enmod rewrite
 
 # Define o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copia o código fonte para o container
-COPY . /var/www/html/
+# Copia apenas os arquivos de dependência primeiro (para melhor cache)
+COPY composer.json composer.lock* ./
+
+# Instala as dependências do Composer (sem dev e com otimização)
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Copia o restante do código fonte
+COPY . .
 
 # Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html \

@@ -1,7 +1,7 @@
 # Usa a imagem oficial do PHP com Apache
 FROM php:8.2-apache
 
-# Instala dependências do sistema e extensões PHP
+# Instala dependências do sistema, extensões PHP e Node.js
 RUN apt-get update && apt-get install -y \
     git \
     zip \
@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libldap2-dev \
     libssl-dev \
+    curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install -j$(nproc) \
@@ -46,10 +50,16 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Copia o restante do código fonte
 COPY . .
 
+# Instala as dependências do Node e compila os assets
+RUN npm install \
+    && npm run build \
+    && rm -rf node_modules
+
 # Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/public
+    && chmod -R 755 /var/www/html/public \
+    && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Configura o Apache para servir a pasta public/
 RUN echo '<VirtualHost *:80>\n\
@@ -62,6 +72,17 @@ RUN echo '<VirtualHost *:80>\n\
     ErrorLog ${APACHE_LOG_DIR}/error.log\n\
     CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+
+# Configura o .htaccess para permitir URLs amigáveis
+RUN echo '<IfModule mod_rewrite.c>\n\
+    RewriteEngine On\n\
+    # Se o arquivo ou diretório existir, sirva-o diretamente (ignorando query strings)\n\
+    RewriteCond %{REQUEST_FILENAME} -f [OR]\n\
+    RewriteCond %{REQUEST_FILENAME} -d\n\
+    RewriteRule ^ - [L]\n\
+    # Redireciona tudo para o index.php\n\
+    RewriteRule ^ index.php [QSA,L]\n\
+</IfModule>' > /var/www/html/public/.htaccess
 
 # Expõe a porta 80
 EXPOSE 80

@@ -18,12 +18,12 @@
 </div>
 
 <div class="row" style="min-height:100vh; max-width: 100vw; height: auto; margin: 0;">
-    <div class="col-md-6 hidden-phone regLeft" style="background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="col-md-6 hidden-phone regLeft" style="background: #000 !important; background-image: none !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;">
 
         <div class="logo">
             <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: white; margin-bottom: 20px;">
-                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 80px; margin-bottom: 15px;" />
-                <span style="font-weight: bold; font-size: 28px;">Editora Luz Negra</span>
+                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 180px; margin-bottom: 20px;" />
+                <span style="font-weight: bold; font-size: 40px; text-align: center;">Editora Luz Negra</span>
             </a>
         </div>
 

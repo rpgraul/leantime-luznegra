@@ -20,11 +20,11 @@
                     <span class="fa fa-bars"></span>
                 </a>
 
-                <div class="logo">
-                    <a
-                        href="{{ BASE_URL }}"
-                        style="background-image: url('{{ BASE_URL }}/dist/images/logo.svg')"
-                    >&nbsp;</a>
+                <div class="logo" style="display: flex; align-items: center; justify-content: center; height: 100%;">
+                    <a href="{{ BASE_URL }}" style="display: flex; align-items: center; text-decoration: none; color: white;">
+                        <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 30px; margin-right: 10px;" />
+                        <span style="font-weight: bold; font-size: 16px;">Editora Luz Negra</span>
+                    </a>
                 </div>
 
                 @include('menu::headMenu')
@@ -61,6 +61,10 @@
 
     @include('global::sections.pageBottom')
     @stack('scripts')
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
     @include('help::helpermodal')
 </body>
 

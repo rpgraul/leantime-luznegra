@@ -11,8 +11,9 @@
 <body class="loginpage" style="height:100%;" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'>
 
 <div class="header hidden-gt-sm tw-p-[10px]" style="background:var(--header-gradient)">
-    <a href="{!! BASE_URL !!}" target="_blank">
-        <img src="{{ BASE_URL }}/dist/images/logo.svg" class="tw-h-full "/>
+    <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; align-items: center; text-decoration: none; color: white;">
+        <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" class="tw-h-full" alt="Editora Luz Negra" style="margin-right: 10px;" />
+        <span style="font-weight: bold;">Editora Luz Negra</span>
     </a>
 </div>
 
@@ -20,8 +21,9 @@
     <div class="col-md-4 hidden-phone regLeft">
 
         <div class="logo">
-            <a href="{!! BASE_URL !!}" target="_blank">
-                <img src="{{ BASE_URL }}/dist/images/logo.svg" />
+            <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; margin-bottom: 20px;">
+                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 50px; margin-right: 15px;" />
+                <span style="font-weight: bold; font-size: 24px;">Editora Luz Negra</span>
             </a>
         </div>
 

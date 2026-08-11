@@ -20,7 +20,7 @@
 <div class="row" style="min-height:100vh; max-width: 100vw; height: auto; margin: 0;">
     <div class="col-md-6 hidden-phone regLeft" style="background: #000 !important; background-image: none !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;">
 
-        <div class="logo">
+        <div class="logo" style="position: relative !important; left: auto !important; top: auto !important; width: auto !important; padding: 0 !important; margin: 0 !important;">
             <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: white; margin-bottom: 20px;">
                 <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 180px; margin-bottom: 20px;" />
                 <span style="font-weight: bold; font-size: 40px; text-align: center;">Editora Luz Negra</span>
@@ -30,7 +30,7 @@
     </div>
     <div class="col-md-6 col-sm-12 regRight" style="display: flex; align-items: center; justify-content: center;">
 
-        <div class="regpanel" style="width: 100%; max-width: 400px; padding: 20px;">
+        <div class="regpanel" style="width: 100%; max-width: 500px; padding: 80px; box-sizing: border-box;">
             <div class="regpanelinner">
                 @isset($action, $module)
                     @include("$module::$action")

@@ -1,17 +1,20 @@
 @extends($layout)
 @section('content')
 
-@dispatchEvent('beforePageHeaderOpen')
-<div class="pageheader">
-    @dispatchEvent('afterPageHeaderOpen')
-    <div class="pagetitle">
-        <h1>{!! __('headlines.login') !!}</h1>
-    </div>
-    @dispatchEvent('beforePageHeaderClose')
-</div>
-@dispatchEvent('afterPageHeaderClose')
-
 <div class="regcontent">
+    <style>
+        .regcontent input[type="text"],
+        .regcontent input[type="email"],
+        .regcontent input[type="password"],
+        .regcontent input[type="submit"],
+        .regcontent button {
+            border-radius: 4px !important;
+            padding: 12px 16px !important;
+            height: auto !important;
+            min-height: 48px !important;
+            font-size: 16px !important;
+        }
+    </style>
     @dispatchEvent('afterRegcontentOpen')
     {!! $tpl->displayInlineNotification() !!}
 
@@ -21,40 +24,32 @@
             @dispatchEvent('afterFormOpen')
         <input type="hidden" name="redirectUrl" value="{{ $redirectUrl }}" />
 
-        <div class="">
-            <label for="username">Email</label>
+        <div class="tw-mb-4">
+            <label for="username" style="font-weight: bold; margin-bottom: 5px; display: block;">Email</label>
             <x-global::forms.text-input name="username" id="username" placeholder="{{ __($inputPlaceholder) }}" value="" />
         </div>
+        <div class="tw-mb-4">
+            <label for="password" style="font-weight: bold; margin-bottom: 5px; display: block;">Senha</label>
+            <x-global::forms.text-input type="password" name="password" id="password" autocomplete="off" placeholder="Sua senha" value="" />
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <input type="checkbox" name="remember" id="remember" value="1">
+                <span>Permanecer Logado</span>
+            </label>
+            <a href="{{ BASE_URL }}/auth/resetPw" class="forgotPw" style="text-decoration: none;">Esqueceu a senha?</a>
+        </div>
+
+        @dispatchEvent('beforeSubmitButton')
         <div class="">
-            <label for="password">Password</label>
-            <x-global::forms.text-input type="password" name="password" id="password" autocomplete="off" placeholder="{{ __('input.placeholders.enter_password') }}" value="" />
-            <div class="forgotPwContainer">
-                <a href="{{ BASE_URL }}/auth/resetPw" class="forgotPw">{!! __('links.forgot_password') !!}</a>
-            </div>
+            <x-global::forms.button tag="input" inputType="submit" name="login" contentRole="primary" labelText="Entrar" style="width: 100%;" />
         </div>
-            @dispatchEvent('beforeSubmitButton')
-        <div class="">
-            <x-global::forms.button tag="input" inputType="submit" name="login" contentRole="primary" :labelText="__('buttons.login')" />
-        </div>
-        <div>
-        </div>
-            @dispatchEvent('beforeFormClose')
+        @dispatchEvent('beforeFormClose')
 
     </form>
     @else
         {!! __('text.no_login_form') !!}<br /><br />
-    @endif
-
-    @if ($oidcEnabled)
-
-        @dispatchEvent('beforeOidcButton')
-
-        <div class="">
-            <div style="margin-top:20px; border-bottom:1px solid #ccc; with:100%; height:10px; overflow:show; text-align:center; margin-bottom:40px;">
-                <p style="text-align:center; display:inline-block; background:var(--secondary-background); padding:0px 5px;">{!! __('label.or_login_with') !!}</p>
-            </div>
-            <x-global::forms.button tag="a" :link="BASE_URL . '/oidc/login'" contentRole="primary" style="width:100%;">{!! __('buttons.oidclogin') !!}</x-global::forms.button>
-        </div>
     @endif
 
     @dispatchEvent('beforeRegcontentClose')

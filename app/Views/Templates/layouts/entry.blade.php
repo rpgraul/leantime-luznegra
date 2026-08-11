@@ -17,37 +17,21 @@
     </a>
 </div>
 
-<div class="row" style="min-height:100vh; max-width: 98vw; height: auto;">
-    <div class="col-md-4 hidden-phone regLeft">
+<div class="row" style="min-height:100vh; max-width: 100vw; height: auto; margin: 0;">
+    <div class="col-md-6 hidden-phone regLeft" style="background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
 
         <div class="logo">
-            <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; margin-bottom: 20px;">
-                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 50px; margin-right: 15px;" />
-                <span style="font-weight: bold; font-size: 24px;">Editora Luz Negra</span>
+            <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: white; margin-bottom: 20px;">
+                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 80px; margin-bottom: 15px;" />
+                <span style="font-weight: bold; font-size: 28px;">Editora Luz Negra</span>
             </a>
         </div>
 
-        <div class="welcomeContent">
-            @dispatchFilter('welcomeText', '<h1 class="mainWelcome">'.$language->__("headlines.welcome_back").'</h1>')
-        </div>
-
-        @dispatchFilter('belowWelcomeText', '')
-
     </div>
-    <div class="col-md-8 col-sm-12 regRight">
+    <div class="col-md-6 col-sm-12 regRight" style="display: flex; align-items: center; justify-content: center;">
 
-        <div class="regpanel">
+        <div class="regpanel" style="width: 100%; max-width: 400px; padding: 20px;">
             <div class="regpanelinner">
-
-                @if($logoPath != '')
-                    <a href="{!! BASE_URL !!}" target="_blank">
-
-                        @if(!str_ends_with($logoPath, "dist/images/logo.svg" ))
-                            <img src="{{ $logoPath }}" class="tw-h-full "/>
-                        @endif
-                    </a>
-                @endif
-
                 @isset($action, $module)
                     @include("$module::$action")
                 @else

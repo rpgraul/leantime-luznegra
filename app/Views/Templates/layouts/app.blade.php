@@ -61,10 +61,6 @@
 
     @include('global::sections.pageBottom')
     @stack('scripts')
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      lucide.createIcons();
-    </script>
     @include('help::helpermodal')
 </body>
 

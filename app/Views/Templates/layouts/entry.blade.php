@@ -2,52 +2,71 @@
 <html dir="{{ __('language.direction') }}" lang="{{ __('language.code') }}">
 <head>
     @include('global::sections.header')
-    <style>
-        .leantimeLogo { position: fixed; bottom: 10px; right: 10px; }
-    </style>
     @stack('styles')
+    <style>
+        body.loginpage {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            background: #fff;
+            overflow-x: hidden;
+        }
+        .login-left {
+            width: 50%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .login-right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #fff;
+        }
+        .leantimeLogo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            body.loginpage { flex-direction: column; height: auto; min-height: 100vh; }
+            .login-left, .login-right { width: 100%; min-height: 50vh; }
+            .login-right { padding: 40px 20px; box-sizing: border-box; }
+        }
+    </style>
 </head>
 
-<body class="loginpage" style="height:100%;" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'>
+<body class="loginpage" hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'>
 
-<div class="header hidden-gt-sm tw-p-[10px]" style="background:var(--header-gradient)">
-    <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; align-items: center; text-decoration: none; color: white;">
-        <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" class="tw-h-full" alt="Editora Luz Negra" style="margin-right: 10px;" />
-        <span style="font-weight: bold;">Editora Luz Negra</span>
-    </a>
-</div>
+    <div class="login-left">
+        <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: white;">
+            <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 180px; margin-bottom: 20px;" />
+            <span style="font-weight: bold; font-size: 40px; text-align: center; margin: 0; padding: 0;">Editora Luz Negra</span>
+        </a>
+    </div>
 
-<div class="row" style="min-height:100vh; max-width: 100vw; height: auto; margin: 0;">
-    <div class="col-md-6 hidden-phone regLeft" style="background: #000 !important; background-image: none !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;">
-
-        <div class="logo" style="position: relative !important; left: auto !important; top: auto !important; width: auto !important; padding: 0 !important; margin: 0 !important;">
-            <a href="{!! BASE_URL !!}" target="_blank" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: white; margin-bottom: 20px;">
-                <img src="{{ BASE_URL }}/dist/images/luz-negra-logo.png" alt="Editora Luz Negra" style="height: 180px; margin-bottom: 20px;" />
-                <span style="font-weight: bold; font-size: 40px; text-align: center;">Editora Luz Negra</span>
-            </a>
+    <div class="login-right">
+        <div style="width: 100%; max-width: 400px; z-index: 10;">
+            @isset($action, $module)
+                @include("$module::$action")
+            @else
+                @yield('content')
+            @endisset
         </div>
-
-    </div>
-    <div class="col-md-6 col-sm-12 regRight" style="display: flex; align-items: center; justify-content: center;">
-
-        <div class="regpanel" style="width: 100%; max-width: 500px; padding: 80px; box-sizing: border-box;">
-            <div class="regpanelinner">
-                @isset($action, $module)
-                    @include("$module::$action")
-                @else
-                    @yield('content')
-                @endisset
-            </div>
+        
+        <div class="leantimeLogo">
+            <img style="height: 25px;" src="{!! BASE_URL !!}/dist/images/logo-powered-by-leantime.png" alt="Powered by Leantime">
         </div>
-
     </div>
-    <div class="leantimeLogo">
-        <img style="height: 25px;" src="{!! BASE_URL !!}/dist/images/logo-powered-by-leantime.png">
-    </div>
-</div>
 
 @include('global::sections.pageBottom')
 @stack('scripts')
 </body>
-
 </html>
